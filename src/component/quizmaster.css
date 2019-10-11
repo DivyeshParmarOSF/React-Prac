@@ -1,0 +1,30 @@
+body{
+    background-color: red;
+}
+.btn-primary{
+    background: red;
+}
+ 
+.questions-wrap li{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.questions-wrap .options-list{
+    padding: 0;
+    margin: 0;
+}
+.options-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+.options-list li{
+    width: 50%;
+    text-align: left;
+}
+.optcorrect {
+    background : green
+}
+.optwrong  {
+    background : white
+}

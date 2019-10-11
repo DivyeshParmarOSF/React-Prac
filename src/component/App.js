@@ -1,6 +1,5 @@
 import React from "react";
-import TimerControl from "./TimerControl";
-
+import QuizMaster from './QuizMaster'
 import "./App.css";
 
 class App extends React.Component {
@@ -8,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
         <div className="timer">
-            <TimerControl startbtn="Start" stopbtn="Stop"/> 
+             <QuizMaster /> 
         </div>
     );
   }
