@@ -13,14 +13,12 @@ export default class QuizQuestion extends React.Component {
             totalQuestion : 0,
             number : 1
         }
-        //this.checkOption = this.checkOption.bind(this);
     }
     componentDidMount(){
         this.setState ({
-            //correctoptions : this.props.details.correct,
+            correctoptions : this.props.details.correct,
             totalQuestion : Object.keys(quizList).length,     
         });
-        //alert(this.state.number)
     }
     checkOption = (e) => {
         this.setState ({
@@ -56,7 +54,6 @@ export default class QuizQuestion extends React.Component {
             <li  onClick={this.checkOption} data-id="4" className={this.state.optionClass ?  'optcorrect' : 'optwrong' }>{this.props.details.options4}</li>
         </ul>
         
-        <Button className="btn">Next Question</Button>
       </li>
     );
   }
