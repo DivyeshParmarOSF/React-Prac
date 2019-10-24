@@ -14,7 +14,8 @@ export default class QuizBook extends React.Component {
             questionIndex : 0,
             totalQuestion : '',
             startQuestion : 1 ,
-            btndisable : true
+            btndisable : true,
+            resultAnss : 0,
         };
     }
     loadQuiz = () =>{
@@ -37,15 +38,22 @@ export default class QuizBook extends React.Component {
         })
     } 
     finishQuiz = () => {
-        return false;
+        alert("Your Result Score is " + this.state.resultAnss );
+        window.location.reload();       
     }
     handleShowButton = () => {
         this.setState({
             btndisable : false
-        })
+        });
     }
+    handleCountResult = () => {
+        this.setState({
+            resultAnss : this.state.resultAnss + 1,
+        });
+    }
+    
     render() {      
-        let questions = Object.keys(this.state.quiz).map((key, index) => <QuizQuestion key={index} details={this.state.quiz[key]} showBtn={this.handleShowButton} />)
+        let questions = Object.keys(this.state.quiz).map((key, index) => <QuizQuestion key={index} details={this.state.quiz[key]} showBtn={this.handleShowButton} countResult={this.handleCountResult}/>)
 
         return(
             <div className="quiz-wrap">
