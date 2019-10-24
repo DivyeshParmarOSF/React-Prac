@@ -38,7 +38,7 @@ export default class QuizBook extends React.Component {
         })
     } 
     finishQuiz = () => {
-        alert("Your Result Score is " + this.state.resultAnss );
+        alert("Your Result Score is " + this.state.resultAnss + "out of " + this.state.totalQuestion );
         window.location.reload();       
     }
     handleShowButton = () => {
