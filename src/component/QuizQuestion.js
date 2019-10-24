@@ -3,58 +3,79 @@ import { Button } from "react-bootstrap"
 import { throwStatement } from '@babel/types';
 import quizList from './quizlist';
 
-let currentOptn, correctOptn; 
+let currentOptn, correctOptn, updatedResult; 
 export default class QuizQuestion extends React.Component {
     constructor() {
         super();
         this.state = {
             correctoptions : '',
-            optionClass : false,    
-            totalQuestion : 0,
-            number : 1
+            //optionClass : false,    
+            //number : 1,
+            options : [],
+            className : ['','','',''],
+            ansVerify : false,
+            resultAns : 0,
         }
     }
     componentDidMount(){
         this.setState ({
             correctoptions : this.props.details.correct,
-            totalQuestion : Object.keys(quizList).length,     
+            options : this.props.details.options                 
         });
     }
     checkOption = (e) => {
-        this.setState ({
-            correctoptions : this.props.details.correct,      
-        });
-
-        currentOptn = e.target.innerHTML
-        correctOptn = this.state.correctoptions
-
-        
-        if(currentOptn === correctOptn) {
-            this.setState({
-                optionClass : true,
-                number : this.state.number + 1
-            })
+        this.setState({
+            resultAns : this.state.resultAns + 1
+        })
+        console.log(" top value " + (this.state.resultAns) );
+        if(this.state.ansVerify === false){
+            this.setState ({
+                correctoptions : this.props.details.correct,
+                //btndisable : this.props.btndisable,
+                ansVerify : true,
+                //resultAns : this.state.resultAns + 1
+            });
+            currentOptn = e.target.innerHTML
+            correctOptn = this.state.correctoptions
+    
+            let updatedClassNames = this.state.className;
+            
+            if(currentOptn === correctOptn) {
+                updatedClassNames[e.target.getAttribute('data-id')] = 'true';
+                        
+                this.setState({
+                    //optionClass : !this.state.optionClass,
+                    //number : this.state.number + 1,
+                    className : updatedClassNames,
+                   
+                })
+            } else {
+                updatedClassNames[e.target.getAttribute('data-id')] = 'false';
+                this.setState({
+                    //optionClass : false,
+                    className : updatedClassNames
+                })
+            } 
+            this.props.showBtn(); 
+             
         } else {
-            this.setState({
-                optionClass : false
-            })
-        }        
+            return false;
+        } 
     }
-  render() {
-    return(
-      <li>
-        <h4>Question {this.state.number} / {this.state.totalQuestion}</h4>
-        <div className='question-title'>
-            {this.props.details.question}
-        </div>
-        <ul className="options-list">
-            <li  onClick={this.checkOption} data-id="1" className={this.state.optionClass ?  'optcorrect' : 'optwrong' }>{this.props.details.options1}</li>
-            <li  onClick={this.checkOption} data-id="2" className={this.state.optionClass ?  'optcorrect' : 'optwrong' }>{this.props.details.options2}</li>
-            <li  onClick={this.checkOption} data-id="3" className={this.state.optionClass ?  'optcorrect' : 'optwrong' }>{this.props.details.options3}</li>
-            <li  onClick={this.checkOption} data-id="4" className={this.state.optionClass ?  'optcorrect' : 'optwrong' }>{this.props.details.options4}</li>
-        </ul>
-        
-      </li>
-    );
-  }
+    
+    render() {
+        let  options = this.state.options;
+        const listItems = options.map((key, i) => <li key={key} data-id={i} onClick={this.checkOption} className={this.state.className[i]}>{key}</li>);  
+
+        return(
+        <li>
+            <div className='question-title'>
+                {this.props.details.question}
+            </div>
+            <ul className="options-list">
+                {listItems}
+            </ul>
+        </li>
+        );
+    }
 }

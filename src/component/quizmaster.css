@@ -25,6 +25,13 @@ body{
 .optcorrect {
     background : green
 }
+.true {
+    background : green
+}
+.false{
+    background : #f00;
+    /* border: 1px solid #f00; */
+}
 .optwrong  {
     background : white;
     border: 1px solid #f00;

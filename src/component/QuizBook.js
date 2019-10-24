@@ -12,7 +12,9 @@ export default class QuizBook extends React.Component {
         this.state = {
             quiz : {},
             questionIndex : 0,
-            totalQuestion : ''
+            totalQuestion : '',
+            startQuestion : 1 ,
+            btndisable : true
         };
     }
     loadQuiz = () =>{
@@ -24,31 +26,37 @@ export default class QuizBook extends React.Component {
     componentDidMount = () => {
         this.setState({
             quiz : quizList,
-            //questionIndex : this.state.questionIndex + 1,
-
-            //totalQuestion : Object.keys(this.state.quiz).length 
-        }); 
+            totalQuestion : Object.keys(this.state.quiz).length 
+        });
     }
     checkNext = () => {
         this.setState( {
-            questionIndex : this.state.questionIndex + 1
+            questionIndex : this.state.questionIndex + 1,
+            startQuestion : this.state.startQuestion + 1,
+            btndisable : true
         })
-        //alert(this.state.questionIndex);
-         
     } 
+    finishQuiz = () => {
+        return false;
+    }
+    handleShowButton = () => {
+        this.setState({
+            btndisable : false
+        })
+    }
     render() {      
-        let questions = Object.keys(this.state.quiz).map((key, index) => <QuizQuestion key={index} details={this.state.quiz[key]} />)
+        let questions = Object.keys(this.state.quiz).map((key, index) => <QuizQuestion key={index} details={this.state.quiz[key]} showBtn={this.handleShowButton} />)
 
         return(
             <div className="quiz-wrap">
+                <h4>Question {this.state.startQuestion} / {this.state.totalQuestion}</h4>
                 <ul className="questions-wrap">
                     {questions[this.state.questionIndex]}
-                </ul>
-                { this.state.questionIndex } 
-                -->
-                { this.state.totalQuestion }
-                 
-                <Button className="btn" onClick={this.checkNext} > {this.state.questionIndex === this.state.totalQuestion ? 'Finish Quiz' : 'Next Question ' } </Button>
+                </ul> 
+                {   this.state.questionIndex !== (this.state.totalQuestion - 1) ?
+                    <Button disabled={this.state.btndisable ? 'disabled' : ''} className="btn" onClick={this.checkNext} >Next Question</Button> :
+                    <Button disabled={this.state.btndisable ? 'disabled' : ''} className="btn" onClick={this.finishQuiz} >Finish Quiz</Button>
+                }                
             </div>
         );
     }
