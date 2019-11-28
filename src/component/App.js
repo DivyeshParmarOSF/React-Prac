@@ -1,14 +1,12 @@
-import React from "react";
-import TimerControl from "./TimerControl";
-
+import React from "react"; 
 import "./App.css";
 
 class App extends React.Component {
 
   render() {
     return (
-        <div className="timer">
-            <TimerControl startbtn="Start" stopbtn="Stop"/> 
+        <div>
+            <h1>Hello Welcome To React</h1>
         </div>
     );
   }
